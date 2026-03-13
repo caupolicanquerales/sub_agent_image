@@ -5,6 +5,7 @@ import java.util.concurrent.Executors;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +19,7 @@ import com.capo.sub_agent_image.utils.SseStreamUtil;
 
 @RestController
 @RequestMapping("sub-agent-image")
+@CrossOrigin(origins = "${app.frontend.url}")
 public class SubAgentController {
 	
 	private final ExecutorService executor = Executors.newCachedThreadPool();
