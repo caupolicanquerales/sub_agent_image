@@ -2,6 +2,8 @@ package com.capo.sub_agent_image.service;
 
 import java.util.concurrent.CompletableFuture;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.ai.image.ImageModel;
 import org.springframework.ai.image.ImagePrompt;
 import org.springframework.ai.image.ImageResponse;
@@ -19,6 +21,8 @@ public class ExecutingPromptImageService {
 	@Value(value="${image.model.name}")
 	private String imageModelName;
 	
+    private static final Logger log = LoggerFactory.getLogger(ExecutingPromptImageService.class);
+
 	public ExecutingPromptImageService(@Qualifier("customOpenAiImageModel") ImageModel imageModel) {
 		this.imageModel=imageModel;
 	}
@@ -32,8 +36,9 @@ public class ExecutingPromptImageService {
 
 			ImagePrompt imagePrompt = new ImagePrompt(prompt, options);
 			ImageResponse response = imageModel.call(imagePrompt);
-
-			return response.getResult().getOutput().getB64Json();
+			String imageBase64= response.getResult().getOutput().getB64Json();
+			log.info("Se origino la image: {}",imageBase64);
+			return imageBase64;
 		});
 	}
 }
